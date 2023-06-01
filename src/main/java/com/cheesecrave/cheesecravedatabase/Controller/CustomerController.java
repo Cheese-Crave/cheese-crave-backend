@@ -28,4 +28,10 @@ public class CustomerController {
     public void delete(@RequestBody Customer customer) {
         customerService.delete(customer);
     }
+
+    @DeleteMapping("/delete/{accountNumber}")
+    public void delete(@PathVariable Long accountNumber) {
+        customerService.delete(accountNumber);
+    }
+
 }

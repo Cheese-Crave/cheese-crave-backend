@@ -9,11 +9,11 @@ public interface CustomerService {
     // built in methods with JPA
     void save(Customer customer);
     void delete(Customer customer);
+    void delete(Long accountNumber);
     Iterable<Customer> findAll();
     Customer findById(Long accountNumber);
 
     // custom methods
-    void deleteById(Long accountNumber);
     Customer findByEmail( String email );
     Customer findByFirstName( String firstName );
     Customer findByLastName( String lastName );

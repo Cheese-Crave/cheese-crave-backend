@@ -25,6 +25,10 @@ public class CustomerServiceImplementation implements CustomerService {
     public void delete(Customer customer) {
         customerRepository.delete(customer);
     }
+    @Override
+    public void delete(Long accountNumber) {
+        customerRepository.deleteById(accountNumber);
+    }
 
     @Override
     public Iterable<Customer> findAll() {
@@ -51,11 +55,5 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Customer findByLastName(String lastName) {
         return customerRepository.findByLastName(lastName).stream().findFirst().orElse(null);
-    }
-    @Override
-    public void deleteById(Long accountNumber) {
-        if (customerRepository.existsById(accountNumber)) {
-            customerRepository.deleteById(accountNumber);
-        }
     }
 }
