@@ -4,12 +4,15 @@ import com.cheesecrave.cheesecravedatabase.Model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // get product information
-    Product getByName(String name);
-    Product getByDescription(String description);
-    Product getByPrice(Double price);
-    Product getByQuantity(int quantity);
+    // return instances of Product where the field matches the provided value
+    List<Product> findByName(String name);
+    List<Product> findByDescription(String description);
+    List<Product> findByPrice(Double price);
+    List<Product> findByQuantity(int quantity);
+    List<Product> findByNameContaining(String query);
 }

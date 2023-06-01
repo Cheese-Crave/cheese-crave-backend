@@ -14,7 +14,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/account")
+    @GetMapping("/all")
     public Iterable<Customer> get() {
         return customerService.findAll();
     }
@@ -22,11 +22,6 @@ public class CustomerController {
     @PostMapping ("/new") //automatically creates and saves customers
     public void save(@RequestBody Customer customer) {
         customerService.save(customer);
-    }
-
-    @DeleteMapping ("/delete")
-    public void delete(@RequestBody Customer customer) {
-        customerService.delete(customer);
     }
 
     @DeleteMapping("/delete/{accountNumber}")
