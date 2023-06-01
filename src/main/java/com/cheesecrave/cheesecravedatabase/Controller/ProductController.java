@@ -24,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/inventory/{productId}")
-    public Product getProduct(@PathVariable Long productId) {
+    public Product getById(@PathVariable Long productId) {
         return productService.findById(productId);
     }
 
@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Product> searchProducts(@RequestParam String query) {
+    public List<Product> search(@RequestParam String query) {
         return productService.search(query);
     }
 
