@@ -19,7 +19,7 @@ public class CustomerController {
         return customerService.findAll();
     }
 
-    @PutMapping ("/new") //automatically creates and saves customers
+    @PostMapping ("/new") //automatically creates and saves customers
     public void save(@RequestBody Customer customer) {
         customerService.save(customer);
     }
