@@ -1,13 +1,13 @@
 package com.cheesecrave.cheesecravedatabase.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,7 +31,6 @@ public class Customer {
     @Column(name = "has_account")
     private boolean hasAccount;
 
-
-    //equals, hashcode, and toString
-
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Purchase> purchase = new HashSet<>();
 }
