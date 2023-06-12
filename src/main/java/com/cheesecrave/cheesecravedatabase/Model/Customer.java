@@ -1,11 +1,10 @@
 package com.cheesecrave.cheesecravedatabase.Model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +20,6 @@ public class Customer {
     @Column(name = "account_number")
     private Long accountNumber;
 
-    //instance fields
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -33,4 +31,14 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Purchase> purchase = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "accountNumber=" + accountNumber +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

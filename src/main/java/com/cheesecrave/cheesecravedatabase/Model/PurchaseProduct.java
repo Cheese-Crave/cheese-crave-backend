@@ -25,16 +25,17 @@ public class PurchaseProduct {
     @MapsId("purchaseId")
     private Purchase purchase;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity") // number of product sold
     private int quantity;
 
-    public static PurchaseProduct fromDTO(PurchaseProductDTO purchaseProductDTO, Purchase purchase) {
+    public static PurchaseProduct fromDTO(PurchaseProductDTO purchaseProductDTO, Purchase purchase, Product product) {
+
         PurchaseProduct purchaseProduct = new PurchaseProduct();
-        PurchaseProductId purchaseProductId = new PurchaseProductId();
-        purchaseProductId.setProductId(purchaseProductDTO.getProductId());
-        purchaseProduct.setId(purchaseProductId);
+
+        purchaseProduct.setProduct(product); // set the product entity on the PurchaseProduct
         purchaseProduct.setQuantity(purchaseProductDTO.getQuantity());
-        purchaseProduct.setPurchase(purchase);
+        purchaseProduct.setPurchase(purchase); // set the Purchase entity on the PurchaseProduct
+
         return purchaseProduct;
     }
 

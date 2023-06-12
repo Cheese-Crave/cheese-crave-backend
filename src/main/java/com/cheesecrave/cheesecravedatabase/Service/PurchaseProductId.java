@@ -1,10 +1,18 @@
 package com.cheesecrave.cheesecravedatabase.Service;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 public class PurchaseProductId implements Serializable {
     private Long productId;
@@ -22,9 +30,4 @@ public class PurchaseProductId implements Serializable {
         return Objects.hash(purchaseId, productId);
     }
 
-    public void setPurchaseId(Long purchaseId) {
-    }
-
-    public void setProductId(Long productId) {
-    }
 }

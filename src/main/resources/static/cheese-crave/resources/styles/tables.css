@@ -1,0 +1,48 @@
+/* shopping cart table */
+table {
+    border-collapse: collapse;
+    width: 75%;
+    border-radius: 2rem;
+}
+
+th,
+td {
+    border-bottom: 1px solid var(--burgundy);
+    padding: 8px;
+    text-align: center;
+    font-size: 21px;
+    background-color: hsla(38, 78%, 82%, 0.6);
+}
+
+th {
+    text-transform: uppercase;
+    color: var(--cream-beige);
+    background-color: var(--burgundy);
+}
+
+
+tbody tr:last-of-type {
+    margin-top: 4em;
+    background-color: hsla(360, 100%, 25%, 0.8);
+}
+
+#totalQuantity,
+#totalPrice {
+    text-align: center;
+}
+
+.quantity-value::before {
+    content: "x";
+}
+
+.price-value::before {
+    content: "$";
+}
+
+  
+  
+  
+      
+      
+      
+      

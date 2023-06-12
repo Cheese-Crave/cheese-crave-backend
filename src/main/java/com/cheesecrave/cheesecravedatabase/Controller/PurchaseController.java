@@ -3,11 +3,13 @@ package com.cheesecrave.cheesecravedatabase.Controller;
 import com.cheesecrave.cheesecravedatabase.DTO.PurchaseDTO;
 import com.cheesecrave.cheesecravedatabase.DTO.PurchaseProductDTO;
 import com.cheesecrave.cheesecravedatabase.Model.Customer;
+import com.cheesecrave.cheesecravedatabase.Model.Product;
 import com.cheesecrave.cheesecravedatabase.Model.Purchase;
 import com.cheesecrave.cheesecravedatabase.Model.PurchaseProduct;
 import com.cheesecrave.cheesecravedatabase.Repository.CustomerRepository;
+import com.cheesecrave.cheesecravedatabase.Repository.ProductRepository;
+import com.cheesecrave.cheesecravedatabase.Repository.PurchaseProductRepository;
 import com.cheesecrave.cheesecravedatabase.Repository.PurchaseRepository;
-import com.cheesecrave.cheesecravedatabase.Service.PurchaseProductId;
 import com.cheesecrave.cheesecravedatabase.Service.PurchaseService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,14 @@ public class PurchaseController {
     private final PurchaseService purchaseService;
     private final CustomerRepository customerRepository;
     private final PurchaseRepository purchaseRepository;
-    public PurchaseController(PurchaseService purchaseService, CustomerRepository customerRepository, PurchaseRepository purchaseRepository) {
+    private final ProductRepository productRepository;
+    private final PurchaseProductRepository purchaseProductRepository;
+    public PurchaseController(PurchaseService purchaseService, CustomerRepository customerRepository, PurchaseRepository purchaseRepository, ProductRepository productRepository, PurchaseProductRepository purchaseProductRepository) {
         this.purchaseService = purchaseService;
         this.customerRepository = customerRepository;
         this.purchaseRepository = purchaseRepository;
+        this.productRepository = productRepository;
+        this.purchaseProductRepository = purchaseProductRepository;
     }
 
     @GetMapping("/{purchaseId}")
@@ -39,35 +45,38 @@ public class PurchaseController {
 
     @PostMapping("/api/purchase/new")
     public ResponseEntity<Purchase> createPurchase(@RequestBody PurchaseDTO purchaseDTO) {
+
+        // check that a customer exists with the accountNumber provided
         Optional<Customer> verifyCustomer = customerRepository.findById(purchaseDTO.getAccountNumber());
-        if (verifyCustomer.isEmpty()) {
+        if (!verifyCustomer.isPresent()) { // if the customer exists, create the purchase
+            System.out.println("No customer with accountNumber: " + purchaseDTO.getAccountNumber());
             return ResponseEntity.badRequest().body(null);
         }
 
-        Customer customer = verifyCustomer.get();
-        Purchase purchase = new Purchase();
-        purchase.setTotalPrice(purchaseDTO.getTotalPrice());
-        purchase.setOrderQuantity(purchaseDTO.getOrderQuantity());
-        purchase.setCustomer(customer);
+        Customer customer = verifyCustomer.get(); // Getting the Customer object from the Optional<Customer> object
+        Purchase purchase = new Purchase(); // Creating the Purchase object
 
-        // Saving the Purchase first
-        try {
-            purchase = purchaseRepository.save(purchase);
-        } catch (DataIntegrityViolationException ex) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        purchase.setTotalPrice(purchaseDTO.getTotalPrice()); // Setting the Purchase TotalPrice field
+        purchase.setOrderQuantity(purchaseDTO.getOrderQuantity()); // Setting the Purchase OrderQuantity field
+        purchase.setCustomer(customer);  // Setting the Purchase Customer field
 
+        // Creating the PurchaseProduct objects
         for (PurchaseProductDTO purchaseProductDTO : purchaseDTO.getPurchaseProducts()) {
-            PurchaseProduct purchaseProduct = PurchaseProduct.fromDTO(purchaseProductDTO, purchase);
+            Optional<Product> productOpt = productRepository.findById(purchaseProductDTO.getProductId());
+            if (!productOpt.isPresent()) {
+                System.out.println("No product with id: " + purchaseProductDTO.getProductId());
+            }
+            PurchaseProduct purchaseProduct = PurchaseProduct.fromDTO(purchaseProductDTO, purchase, productOpt.get());
             purchase.getPurchaseProducts().add(purchaseProduct);
         }
 
-        // Updating the Purchase with the PurchaseProducts
         try {
-            purchase = purchaseRepository.save(purchase);
+            purchase = purchaseRepository.save(purchase); // Saving the Purchase first
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.badRequest().body(null);
+
         }
+        purchase = purchaseRepository.save(purchase); // Saving the Purchase again to update the PurchaseProducts
 
         return ResponseEntity.ok(purchase);
     }
