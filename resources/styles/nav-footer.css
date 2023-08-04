@@ -10,14 +10,14 @@ nav {
     align-items: center;
     justify-content: flex-end;
     background-color: var(--burgundy);
-    background-image: url("../images/cheeseTexture.png");
+    background-image: url("cheeseTexture.png");
 }
 
 .nav-panel {
     display: flex;
     list-style: none;
     background-color: var(--burgundy);
-    background-image: url("../images/cheeseTexture.png");
+    background-image: url("cheeseTexture.png");
 }
 
 .nav-panel li a {
@@ -42,7 +42,7 @@ footer {
     padding: 4em;
     font-size: 12px;
     background-color: var(--burgundy);
-    background-image: url(../images/cheeseTexture.png);
+    background-image: url(cheeseTexture.png);
 }
 
 

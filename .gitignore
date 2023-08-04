@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.replit
+.DS_Store
+.idea/cheese-crave.iml
