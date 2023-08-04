@@ -20,7 +20,7 @@ public class Purchase {
     @Column(name = "purchase_Id")
     private Long purchaseId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_number", nullable = false)
     private Customer customer;
 
@@ -30,6 +30,6 @@ public class Purchase {
     @Column(name = "order_quantity") // number of cheeses sold in one order
     private String orderQuantity;
 
-    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PurchaseProduct> purchaseProducts = new HashSet<>();
 }

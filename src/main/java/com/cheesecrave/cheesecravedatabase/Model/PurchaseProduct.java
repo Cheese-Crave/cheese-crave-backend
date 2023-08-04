@@ -17,11 +17,11 @@ public class PurchaseProduct {
     @EmbeddedId
     private PurchaseProductId id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productId")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("purchaseId")
     private Purchase purchase;
 
@@ -31,11 +31,9 @@ public class PurchaseProduct {
     public static PurchaseProduct fromDTO(PurchaseProductDTO purchaseProductDTO, Purchase purchase, Product product) {
 
         PurchaseProduct purchaseProduct = new PurchaseProduct();
-
         purchaseProduct.setProduct(product); // set the product entity on the PurchaseProduct
         purchaseProduct.setQuantity(purchaseProductDTO.getQuantity());
         purchaseProduct.setPurchase(purchase); // set the Purchase entity on the PurchaseProduct
-
         return purchaseProduct;
     }
 

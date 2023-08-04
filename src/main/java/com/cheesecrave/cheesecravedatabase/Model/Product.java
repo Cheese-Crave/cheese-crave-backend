@@ -19,25 +19,42 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue
-    @Column(name="product_Id")
+    @Column(name="product_id")
     private Long productId;
 
     @Column(name="name")
     private String name;
 
-    @Column(name="price")
-    private double price;
+    @Column(name="description", columnDefinition = "TEXT")
+    private String description;
 
-    @Column(name="type")
-    private String type;
+    @Column(name="image_url")
+    private String image;
+
+    @Column(nullable = false, columnDefinition = "DECIMAL(10, 2) DEFAULT 1.00")
+    private double price;
 
     @Column(name="quantity") // number of cheese in inventory
     private int quantity;
 
-    @Column(name="description")
-    private String description;
+    @Column(name="type")
+    private String type;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(name="milk_type")
+    private String milkType;
+
+    @Column(name="aroma")
+    private String aroma;
+
+    @Column(name="texture")
+    private String texture;
+
+    @Column(name="vegetarian")
+    private Boolean vegetarian;
+
+    @Column(name="flavor")
+    private String flavor;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PurchaseProduct> purchaseProducts = new HashSet<>();
-
 }

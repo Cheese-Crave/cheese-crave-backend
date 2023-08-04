@@ -29,7 +29,7 @@ public class Customer {
     @Column(name = "has_account")
     private boolean hasAccount;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Purchase> purchase = new HashSet<>();
 
     @Override
