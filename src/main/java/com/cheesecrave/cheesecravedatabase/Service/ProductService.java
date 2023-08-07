@@ -10,6 +10,8 @@ import java.util.Optional;
 @Service
 public interface ProductService {
 
+    List<ProductDTO> findPopularCheeses();
+
     Optional<ProductDTO> findById(Long productId) throws RuntimeException;
     List<ProductDTO> findAll();
     List<ProductDTO> search(String query);

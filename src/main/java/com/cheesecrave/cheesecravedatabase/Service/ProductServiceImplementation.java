@@ -3,6 +3,8 @@ import com.cheesecrave.cheesecravedatabase.DTO.ProductDTO;
 import com.cheesecrave.cheesecravedatabase.Model.Product;
 import com.cheesecrave.cheesecravedatabase.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,6 +15,15 @@ public class ProductServiceImplementation implements ProductService {
 
     public ProductServiceImplementation(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    @Override
+    public List<ProductDTO> findPopularCheeses() {
+        List<String> popularCheeses = Arrays.asList("Cheddar", "Mozzarella", "Swiss", "American", "Parmesan", "Monterey Jack", "Provolone", "Gouda", "Blue Cheese");
+        List<Product> products = productRepository.findByNameIn(popularCheeses);
+        return products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

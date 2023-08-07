@@ -35,3 +35,5 @@ build/
 .replit
 .DS_Store
 .idea/cheese-crave.iml
+node_modules/
+src/main/resources/application.properties

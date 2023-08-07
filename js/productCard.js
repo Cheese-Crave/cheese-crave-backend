@@ -2,9 +2,9 @@ import {Product} from "./Products.js";
 
 const productContainer = document.getElementById('product-container')
 let currentPage = 0;
-const itemsPerPage = 8;
+const itemsPerPage = 9;
 function displayProducts() {
-    fetch('http://localhost:8080/api/product/inventory')
+    fetch('http://localhost:8080/api/product/popular')
         .then((response) => response.json())
         .then((products) => {
             const startIndex = currentPage * itemsPerPage; // start index for the current page

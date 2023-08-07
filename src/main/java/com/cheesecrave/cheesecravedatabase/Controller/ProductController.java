@@ -20,9 +20,15 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/popular")
+    public List<ProductDTO> getPopularCheeses() {
+        System.out.println("Handling product inventory request...");
+        return productService.findPopularCheeses();
+    }
+
+
     @GetMapping("/inventory")
     public List<ProductDTO> get() {
-        System.out.println("Handling product inventory request...");
         return productService.findAll();
     }
 
