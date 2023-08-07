@@ -1,7 +1,10 @@
+import {databaseURL} from "./config.js";
 export class Product {
-    constructor(image, name, price, description, labels) {
+    constructor(productId, image, name, averageRating, price, description, labels) {
+        this.productId = productId;
         this.image = image;
         this.name = name;
+        this.averageRating = averageRating;
         this.price = price;
         this.description = description;
         this.labels = labels;
@@ -29,7 +32,8 @@ export class Product {
         let star;
         for (let i = 1; i <= 5; i++) {
             star = document.createElement("i");
-            star.className = "fa-solid fa-star fa-sm";
+            star.className = i <= this.averageRating ? "fa-solid fa-star fa-sm filled" : "fa-solid fa-star fa-sm";
+            star.addEventListener('click', () => rateProduct(i));
             productHeading.appendChild(star);
         }
         section.appendChild(productHeading);
@@ -88,32 +92,34 @@ export class Product {
             price: this.price,
             quantity: 1,
         };
-        // Retrieve existing products from local storage
-        const existingProducts = JSON.parse(localStorage.getItem('inCart')) || [];
 
-        // Add the new product to the existing products
-        existingProducts.push(productToAdd);
-
-        // Store updated products back to local storage
-        localStorage.setItem('inCart', JSON.stringify(existingProducts));
-
+        const existingProducts = JSON.parse(localStorage.getItem('inCart')) || []; // Retrieve existing products from local storage
+        existingProducts.push(productToAdd); // Add the new product to the existing products
+        localStorage.setItem('inCart', JSON.stringify(existingProducts)); // Store updated products back to local storage
         alert('Added to cart!');
+    }
 
-    //     // POST request to the server
-    //     fetch('http://localhost:3000/api/cart', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(productToAdd),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log('Success:', data);
-    //             alert('Added to cart!');
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
+    rateProduct(rating) {
+
+        const ratingData = {
+            productId: this.productId,
+            rating: rating
+        };
+
+        // Send the rating to the server
+        fetch(`${databaseURL}/api/product/${this.productId}/rating`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(ratingData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                this.averageRating = data.averageRating; // Update the display with the new average rating
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 }

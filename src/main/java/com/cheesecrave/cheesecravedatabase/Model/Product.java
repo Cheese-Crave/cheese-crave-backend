@@ -55,6 +55,15 @@ public class Product {
     @Column(name="flavor")
     private String flavor;
 
+    @Column(name = "total_rating", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private Integer totalRating;
+
+    @Column(name = "rating_count", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private Integer ratingCount;
+
+    @Transient
+    private Integer averageRating;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PurchaseProduct> purchaseProducts = new HashSet<>();
 }

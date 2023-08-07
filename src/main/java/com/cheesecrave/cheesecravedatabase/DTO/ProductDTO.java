@@ -18,8 +18,10 @@ public class ProductDTO {
     private String texture;
     private Boolean vegetarian;
     private String flavor;
+    private int totalRating;
+    private int ratingCount;
 
-    public ProductDTO(String name, String image, String description, double price, String milkType, String type, int quantity, String aroma, String texture, Boolean vegetarian, String flavor) {
+    public ProductDTO(String name, String image, String description, double price, String milkType, String type, int quantity, String aroma, String texture, Boolean vegetarian, String flavor, int totalRating, int ratingCount) {
         this.name = name;
         this.image = image;
         this.description = description;
@@ -31,5 +33,7 @@ public class ProductDTO {
         this.texture = texture;
         this.vegetarian = vegetarian;
         this.flavor = flavor;
+        this.totalRating = totalRating;
+        this.ratingCount = ratingCount;
     }
 }

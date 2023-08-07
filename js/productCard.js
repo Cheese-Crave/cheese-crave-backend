@@ -1,10 +1,11 @@
-import {Product} from "./Products.js";
+import {Product} from "./Product.js";
+import {databaseURL} from "./config.js";
 
 const productContainer = document.getElementById('product-container')
 let currentPage = 0;
 const itemsPerPage = 9;
 function displayProducts() {
-    fetch('http://localhost:8080/api/product/popular')
+    fetch(`${databaseURL}/api/product/popular`)
         .then((response) => response.json())
         .then((products) => {
             const startIndex = currentPage * itemsPerPage; // start index for the current page
@@ -13,16 +14,8 @@ function displayProducts() {
             const currentProducts = products.slice(startIndex, endIndex); // Slice products array to get only the items for the current page
 
             currentProducts.forEach((product) => {
-                const labels = [
-                    product.milkType,
-                    product.type,
-                    product.texture,
-                    product.flavor,
-                    product.aroma,
-                    product.vegetarian ? "Vegetarian" : "Non-vegetarian"
-                ];
-
-                const productCard = new Product(product.image, product.name, product.price, product.description, labels);
+                const labels = Array.from(new Set(product.labels.split(','))); // use Set to remove duplicates
+                const productCard = new Product(product.productId, product.image, product.name, product.averageRating, product.price, product.description, labels);
                 productContainer.appendChild(productCard.createCard());
             });
 

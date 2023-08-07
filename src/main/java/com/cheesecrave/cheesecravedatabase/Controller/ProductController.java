@@ -26,6 +26,15 @@ public class ProductController {
         return productService.findPopularCheeses();
     }
 
+    @GetMapping("/{productId}/rating")
+    public int getRating(@PathVariable Long productId) {
+        return productService.getAverageRating(productId);
+    }
+
+    @PostMapping("/{productId}/rating")
+    public void submitRating(@PathVariable Long productId, @RequestBody Integer rating) {
+        productService.submitRating(productId, rating);
+    }
 
     @GetMapping("/inventory")
     public List<ProductDTO> get() {
