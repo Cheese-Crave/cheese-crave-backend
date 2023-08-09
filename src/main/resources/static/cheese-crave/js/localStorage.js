@@ -1,5 +1,7 @@
 import { Product } from "./Products.js"
 
+window.addEventListener('storage', displayCart); // cart is updated when local storage is updated
+
 const productContainer = document.getElementById('product-container');
 
 // loading product from local storage

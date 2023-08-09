@@ -1,22 +1,41 @@
 import {Product} from "./Products.js";
 
-const form = document.getElementById('product-form');
 const productContainer = document.getElementById('product-container')
+let currentPage = 0;
+const itemsPerPage = 9;
+function displayProducts() {
+    fetch('http://localhost:8080/api/product/popular')
+        .then((response) => response.json())
+        .then((products) => {
+            const startIndex = currentPage * itemsPerPage; // start index for the current page
+            const endIndex = startIndex + itemsPerPage; // end index for the current page
+            productContainer.innerHTML = ""; // Clear existing product cards
+            const currentProducts = products.slice(startIndex, endIndex); // Slice products array to get only the items for the current page
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    alert('Product Added');
+            currentProducts.forEach((product) => {
+                const labels = [
+                    product.milkType,
+                    product.type,
+                    product.texture,
+                    product.flavor,
+                    product.aroma,
+                    product.vegetarian ? "Vegetarian" : "Non-vegetarian"
+                ];
 
-    const image = form.image.value;
-    const name = form.name.value;
-    const price = form.price.value;
-    const description = form.description.value;
-    const labels = form.labels.value.split(',').map((label) => label.trim());
+                const productCard = new Product(product.image, product.name, product.price, product.description, labels);
+                productContainer.appendChild(productCard.createCard());
+            });
 
-    // retrieves the items in local storage or create empty array
-    const products = JSON.parse(localStorage.getItem('products')) || [];
-    // new object with product data
-    products.push({image, name, price, description, labels});
-    // save the updated array to local storage
-    localStorage.setItem('products', JSON.stringify(products));
-})
+            // disables the prev and next buttons based on the current page
+            document.getElementById("prev").disabled = (currentPage === 0);
+            document.getElementById("next").disabled = (endIndex >= products.length);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+window.changePage = function(direction) { // window is used to make the function globally available
+    currentPage += direction;
+    displayProducts(); // Refresh the products with the new page's items
+}
+
+displayProducts();

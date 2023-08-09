@@ -20,12 +20,10 @@ export class Product {
         // product name & ratings
         const productHeading = document.createElement("div");
         productHeading.className = "productHead";
-
         const productName = document.createElement("h3");
         productName.textContent = this.name;
         productHeading.appendChild(productName);
         section.appendChild(productHeading);
-
         let star;
         for (let i = 1; i <= 5; i++) {
             star = document.createElement("i");
@@ -56,29 +54,7 @@ export class Product {
         this.labels.forEach((label) => {
             const labelElement = document.createElement("p");
             labelElement.className = "characteristics";
-            switch (label.toLowerCase()) {
-                case "mild":
-                    labelElement.innerHTML = "Mild";
-                    break;
-                case "sharp":
-                    labelElement.innerHTML = "Sharp";
-                    break;
-                case "creamy":
-                    labelElement.innerHTML = "Creamy";
-                    break;
-                case "crumbly":
-                    labelElement.innerHTML = "Crumbly";
-                    break;
-                case "aged":
-                    labelElement.innerHTML = "Aged";
-                    break;
-                case "tangy":
-                    labelElement.innerHTML = "Tangy";
-                    break;
-                case "pungent":
-                    labelElement.innerHTML = "Pungent";
-                    break;
-            }
+            labelElement.innerHTML = label;
             labelsContainer.appendChild(labelElement);
         });
         section.appendChild(labelsContainer);
@@ -98,17 +74,26 @@ export class Product {
         const addToWishlist = document.createElement('i');
         addToWishlist.className = "fa-solid fa-gift fa-2xl";
         productIconContainer.appendChild(addToWishlist);
-
         section.appendChild(productIconContainer);
-
         return section;
     }
 
     addToCart() {
+        const productToAdd = {
+            image: this.image,
+            name: this.name,
+            price: this.price,
+            quantity: 1,
+        };
+        // Retrieve existing products from local storage
+        const existingProducts = JSON.parse(localStorage.getItem('inCart')) || [];
+
+        // Add the new product to the existing products
+        existingProducts.push(productToAdd);
         let inCart;
         // checking storage, getting items that have the key 'inCart'
         if (localStorage.getItem('inCart')) {
-            // if the item exists, parse the JSON back into JS objecy
+            // if the item exists, parse the JSON back into JS object
             inCart = JSON.parse(localStorage.getItem('inCart'));
         } else {
             // if not, create an empty string
@@ -123,7 +108,6 @@ export class Product {
             // increase quantity of product in cart
             inCart[productArray].quantity++;
         } else {
-            // create a new row in the table
             inCart.push({
                 image: this.image,
                 name: this.name,
@@ -131,9 +115,7 @@ export class Product {
                 price: this.price
             })
         }
-        // update locaStorage with the modified array
         localStorage.setItem('inCart', JSON.stringify(inCart));
-        // alert user
         alert('Added to cart!');
     }
 }

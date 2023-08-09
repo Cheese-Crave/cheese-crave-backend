@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <link href="../resources/icons/cheeseIcon.png" rel="icon" type="image/icon">
+  <link href="../resources/icons/swissCheeseIcon.png" rel="icon" type="image/icon">
   <title>CheeseCrave.com | Products</title>
 
   <!--  Google Fonts (Rock Salt, Poppins) -->
@@ -27,13 +27,13 @@
   <link href="../resources/styles/mediaQueries.css" rel="stylesheet">
 
   <!--  JavaScript Files-->
-  <script src="./js/navbar.js" defer></script>
-  <script src="../js/Products.js" defer></script>
-  <script src="../js/productCard.js" defer></script>
-  <script src="../js/addToCart.js" defer></script>
-  <script src="../js/formFlip.js" defer></script>
-  <script src="../js/itemsController.js" defer></script>
-  <script src="../js/localStorage.js" defer></script>
+  <script type="module" src="../js/navbar.js" defer></script>
+  <script type="module" src="../js/Products.js" defer></script>
+  <script type="module" src="../js/productCard.js" defer></script>
+  <script type="module" src="../js/addToCart.js" defer></script>
+  <script type="module" src="../js/formFlip.js" defer></script>
+  <script type="module" src="../js/itemsController.js" defer></script>
+  <script type="module" src="../js/localStorage.js" defer></script>
 </head>
 
 <body>
@@ -69,6 +69,10 @@
     <div id="product-container">
       <!--    product cards    -->
     </div>
+    <div id="pagination">
+      <button id="prev" onclick="changePage(-1)">← Prev</button>
+      <button id="next" onclick="changePage(1)">Next →</button>
+    </div>
   </main>
 
   <!-- footer start -->
@@ -101,7 +105,7 @@
             <a class="signin-link" href="./account.html">Sign in</a>
             <a class="about-link" href="./about.html">About CheeseCrave</a>
             <div class="social-links">
-                <i class="fa fa-facebook-square" aria-hiden="true"></i>
+                <i class="fa fa-facebook-square" aria-hidden="true"></i>
                 <i class="fa fa-instagram" aria-hidden="true"></i>
                 <i class="fa fa-twitter-square" aria-hidden="true"></i>
                 <i class="fa fa-pinterest-square" aria-hidden="true"></i>
