@@ -12,7 +12,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // return instances of Product where the field matches the provided value
     List<Product> findByName(String name);
     List<Product> findByNameIn(List<String> names);
-    List<Product> findByTotalRating(int rating);
     List<Product> findByDescription(String description);
     List<Product> findByPrice(Double price);
     List<Product> findByQuantity(int quantity);

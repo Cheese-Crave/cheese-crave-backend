@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface ProductService {
 
     List<ProductDTO> findPopularCheeses();
+
     Optional<ProductDTO> findById(Long productId) throws RuntimeException;
     List<ProductDTO> findAll();
     List<ProductDTO> search(String query);
@@ -23,6 +24,6 @@ public interface ProductService {
     List<ProductDTO> findByPriceBetween(Double minPrice, Double maxPrice);
     void save(Product product);
     void delete(Long productId);
-    void submitRating(Long productId, Integer rating);
-    int getAverageRating(Long productId);
+
+
 }

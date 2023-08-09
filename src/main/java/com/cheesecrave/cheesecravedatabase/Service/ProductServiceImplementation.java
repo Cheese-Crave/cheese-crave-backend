@@ -59,20 +59,6 @@ public class ProductServiceImplementation implements ProductService {
     }
 
     @Override
-    public int getAverageRating(Long productId) {
-        Product product = productRepository.findById(productId).orElseThrow();
-        return product.getRatingCount() == 0 ? 0 : product.getTotalRating() / product.getRatingCount();
-    }
-
-    @Override
-    public void submitRating(Long productId, Integer rating) {
-        Product product = productRepository.findById(productId).orElseThrow();
-        product.setTotalRating(product.getTotalRating() + rating);
-        product.setRatingCount(product.getRatingCount() + 1);
-        productRepository.save(product);
-    }
-
-    @Override
     public List<ProductDTO> findByMilkType(String milkType) {
         List<Product> products = productRepository.findByMilkType(milkType);
         return products.stream()
@@ -141,9 +127,7 @@ public class ProductServiceImplementation implements ProductService {
             product.getAroma(),
             product.getTexture(),
             product.getVegetarian(),
-            product.getFlavor(),
-            product.getRatingCount(),
-            product.getTotalRating()
+            product.getFlavor()
         );
     }
 }
